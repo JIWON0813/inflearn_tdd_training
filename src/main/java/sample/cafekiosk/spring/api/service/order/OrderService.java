@@ -8,6 +8,7 @@ import sample.cafekiosk.spring.domain.order.Order;
 import sample.cafekiosk.spring.domain.product.Product;
 import sample.cafekiosk.spring.domain.product.ProductRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,12 +17,12 @@ public class OrderService {
 
     private final ProductRepository productRepository;
 
-    public OrderResponse createOrder(OrderCreateRequest request) {
+    public OrderResponse createOrder(OrderCreateRequest request, LocalDateTime registeredDateTime) {
         List<String> productNumbers = request.getProductNumbers();
 
         List<Product> proDucts =productRepository.findAllByProductNumberIn(productNumbers);
 
-        Order order = Order.create(proDucts);
+        Order order = Order.create(proDucts, registeredDateTime);
 
         return null;
     }
